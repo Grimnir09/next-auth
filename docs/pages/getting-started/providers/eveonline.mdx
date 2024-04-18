@@ -47,7 +47,11 @@ import NextAuth from "next-auth"
 import EveOnline from "next-auth/providers/eve-online"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  providers: [EveOnline],
+  providers: [
+    EveOnline({
+      checks: ["state"],
+    })
+  ],
 })
 ```
 
@@ -59,7 +63,11 @@ import { SvelteKitAuth } from "@auth/sveltekit"
 import EveOnline from "@auth/sveltekit/providers/eve-online"
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
-  providers: [EveOnline],
+  providers: [
+    EveOnline({
+      checks: ["state"],
+    })
+  ],
 })
 ```
 
@@ -70,7 +78,10 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
 import { ExpressAuth } from "@auth/express"
 import EveOnline from "@auth/express/providers/eve-online"
 
-app.use("/auth/*", ExpressAuth({ providers: [EveOnline] }))
+app.use(
+  "/auth/*",
+  ExpressAuth({ providers: [EveOnline({ checks: ["state"] })] })
+);
 ```
 
   </Code.Express>
